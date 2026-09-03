@@ -5,11 +5,13 @@ body{margin:0;background:linear-gradient(135deg,#eef2ff,#f8fafc);font-family:Ari
 <div id="home" class="card center"><div style="font-size:50px">🎯</div><p class="eyebrow">PRAMUKA LEARNING LAB</p><h1>Kuis Pramuka</h1><p class="muted">P3K • Sejarah Indonesia • Organisasi</p><p>50 soal • 40 pilihan ganda • 10 isian singkat<br>Kesulitan sedang cenderung sulit</p><div class="nameBox"><label for="participantName">Nama peserta</label><input id="participantName" type="text" maxlength="80" autocomplete="name" placeholder="Tulis nama lengkapmu" required><p id="nameError" class="errorText" role="alert"></p></div><button id="startBtn" class="btn primaryBtn" type="button" disabled>🎯 MULAI KUIS</button><p class="muted">🎵 Musik otomatis saat kuis dimulai</p></div>
 <div id="game" class="card hidden"><div class="top"><b id="no" class="badge">Soal 1/50</b><span id="timer" class="timer">⏱️ 05:00</span><b id="sc" class="badge">Skor: 0</b></div><div class="track"><div id="bar" class="bar"></div></div><div id="cat" class="muted"></div><div id="q" class="q"></div><div id="ans"></div><div id="fb"></div><p id="status" class="muted"></p><button id="next" class="btn next" type="button"></button></div>
 <div id="end" class="card hidden center"><h1>Kuis Selesai 🏆</h1><div id="final" class="score"></div><p id="pred"></p><div id="keys"></div></div>
+<div id="kicked" class="card hidden center"><div style="font-size:58px">😂</div><h1>Kamu telah dikeluarkan</h1><p class="muted">Admin telah mengeluarkan kamu dari kuis ini.</p><button id="kickBackBtn" class="btn primaryBtn" type="button">KEMBALI</button></div>
 <div id="admin" class="card hidden"><div class="adminHead"><div><p class="eyebrow">PRIVATE MONITORING</p><h2>Dashboard Admin</h2><p class="muted">Pantau peserta yang sedang mengerjakan dan yang sudah selesai.</p></div><button id="closeAdminBtn" class="ghostBtn" type="button">Kembali</button></div><form id="adminLoginForm" class="adminLogin"><label for="adminEmail">Email admin</label><input id="adminEmail" type="email" autocomplete="username" placeholder="admin@email.com" required><label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password" required><button class="btn primaryBtn" type="submit">MASUK KE DASHBOARD</button><p id="adminMessage" class="errorText" role="alert"></p></form><div id="adminDashboard" class="hidden"><div class="statGrid"><div class="statCard"><span>Total sesi</span><strong id="statAll">0</strong></div><div class="statCard activeStat"><span>Sedang mengerjakan</span><strong id="statActive">0</strong></div><div class="statCard doneStat"><span>Sudah selesai</span><strong id="statDone">0</strong></div></div><div class="tableHead"><div><h3>Aktivitas peserta</h3><p id="adminUpdated" class="muted">Belum diperbarui</p></div><button id="adminRefreshBtn" class="ghostBtn" type="button">Muat ulang</button></div><div id="adminRows" class="adminRows"></div><button id="adminLogoutBtn" class="ghostBtn" type="button">Keluar</button></div></div>
 <footer class="muted center" style="padding:8px 0 18px"><button id="adminBtn" class="linkBtn" type="button">Akses Admin</button><span class="footerDot">•</span> By Cid</footer>
 <style>
 .eyebrow{margin:0 0 6px;color:#4f46e5;font-size:12px;font-weight:900;letter-spacing:.14em}.nameBox{text-align:left;margin:20px 0 8px}.nameBox label,.adminLogin label{display:block;font-weight:800;font-size:14px;margin:0 0 7px}.errorText{min-height:18px;color:#b91c1c;font-size:13px;margin:8px 0 0}.primaryBtn{width:100%}.btn:disabled{opacity:.5;cursor:not-allowed!important}.linkBtn,.ghostBtn{border:0;background:transparent;color:#4338ca;font-weight:800;cursor:pointer;padding:10px;border-radius:10px}.linkBtn:hover,.ghostBtn:hover{background:#eef2ff}.footerDot{margin:0 5px;color:#94a3b8}.adminHead,.tableHead{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.adminHead h2{margin:0;font-size:28px}.adminLogin{max-width:420px;margin-top:20px}.adminLogin input{margin-bottom:12px}.statGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}.statCard{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:15px}.statCard span{display:block;color:#64748b;font-size:12px;font-weight:700}.statCard strong{display:block;font-size:28px;margin-top:6px;color:#172033}.activeStat{background:#ecfdf5;border-color:#bbf7d0}.doneStat{background:#eef2ff;border-color:#c7d2fe}.tableHead{align-items:center;margin:22px 0 10px}.tableHead h3{margin:0 0 3px}.tableHead p{margin:0;font-size:12px}.adminRows{display:grid;gap:10px;margin-bottom:16px}.adminRow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid #e5e7eb;border-radius:15px;padding:14px}.adminRow h4{margin:0 0 4px;font-size:16px}.adminRow p{margin:0;color:#64748b;font-size:13px}.state{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 9px;font-size:12px;font-weight:900;white-space:nowrap}.stateLive{background:#dcfce7;color:#166534}.stateDone{background:#e0e7ff;color:#3730a3}.emptyState{text-align:center;border:1px dashed #cbd5e1;color:#64748b;border-radius:15px;padding:24px}.hidden{display:none!important}@media(max-width:560px){.top{gap:8px;align-items:flex-start}.badge{font-size:12px;padding:6px 8px}.statGrid{grid-template-columns:1fr}.adminHead,.tableHead{display:block}.ghostBtn{margin-top:10px}.adminRow{grid-template-columns:1fr}.state{justify-self:start}}
 </style>
+<style>.stateKick{background:#fee2e2;color:#991b1b}.kickBtn{background:#dc2626;margin:0;padding:9px 12px;font-size:12px}</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const Q=[
@@ -76,6 +78,8 @@ const supabaseClient=window.supabase && SUPABASE_URL.startsWith("https://") && !
 const homeEl=document.getElementById("home");
 const gameEl=document.getElementById("game");
 const endEl=document.getElementById("end");
+const kickedEl=document.getElementById("kicked");
+const kickBackBtn=document.getElementById("kickBackBtn");
 const startBtn=document.getElementById("startBtn");
 const participantNameEl=document.getElementById("participantName");
 const nameErrorEl=document.getElementById("nameError");
@@ -108,9 +112,10 @@ const statDoneEl=document.getElementById("statDone");
 const adminRefreshBtn=document.getElementById("adminRefreshBtn");
 const adminLogoutBtn=document.getElementById("adminLogoutBtn");
 
-let current=0, score=0, results=[], answered=false, seconds=300, timerId=null;
+const QUIZ_STATE_KEY="pramuka-kuis-state-v1";
+let current=0, score=0, results=[], answered=false, seconds=300, timerId=null, questionDeadline=0;
 let audioCtx=null, musicTimer=null, musicStep=0;
-let participantName="", participantUserId=null, quizSessionId=null, progressWrite=Promise.resolve(), adminChannel=null;
+let participantName="", participantUserId=null, quizSessionId=null, progressWrite=Promise.resolve(), adminChannel=null, participantChannel=null;
 
 function escapeHTML(value){
   return String(value??"").replace(/[&<>"']/g,function(char){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char];});
@@ -118,6 +123,75 @@ function escapeHTML(value){
 
 function formatDate(value){
   return value?new Date(value).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"}):"-";
+}
+
+function saveLocalQuizState(){
+  if(!participantName || !quizSessionId)return;
+  try{localStorage.setItem(QUIZ_STATE_KEY,JSON.stringify({participantName,participantUserId,quizSessionId,current,score,results,answered,deadline:questionDeadline}));}catch(error){}
+}
+
+function clearLocalQuizState(){
+  try{localStorage.removeItem(QUIZ_STATE_KEY);}catch(error){}
+}
+
+function stopParticipantWatch(){
+  if(participantChannel && supabaseClient){void supabaseClient.removeChannel(participantChannel);}
+  participantChannel=null;
+}
+
+function showKickNotice(){
+  clearInterval(timerId);
+  clearInterval(musicTimer);
+  stopParticipantWatch();
+  if(audioCtx){try{audioCtx.close();}catch(error){}}
+  quizSessionId=null;
+  participantUserId=null;
+  clearLocalQuizState();
+  homeEl.classList.add("hidden");
+  gameEl.classList.add("hidden");
+  endEl.classList.add("hidden");
+  adminEl.classList.add("hidden");
+  kickedEl.classList.remove("hidden");
+}
+
+function watchParticipantSession(){
+  if(!supabaseClient || !quizSessionId || participantChannel)return;
+  participantChannel=supabaseClient.channel("quiz-session-"+quizSessionId)
+    .on("postgres_changes",{event:"UPDATE",schema:"public",table:"quiz_sessions",filter:"id=eq."+quizSessionId},function(payload){
+      if(payload.new && payload.new.status==="kicked")showKickNotice();
+    }).subscribe();
+}
+
+async function checkRemoteSession(){
+  if(!supabaseClient || !quizSessionId)return;
+  const sessionId=quizSessionId;
+  const result=await supabaseClient.from("quiz_sessions").select("status").eq("id",sessionId).maybeSingle();
+  if(quizSessionId===sessionId && result.data && result.data.status==="kicked")showKickNotice();
+}
+
+function restoreLocalQuiz(){
+  let saved;
+  try{saved=JSON.parse(localStorage.getItem(QUIZ_STATE_KEY)||"null");}catch(error){saved=null;}
+  if(!saved || !saved.quizSessionId || !saved.participantName || saved.current<0 || saved.current>=Q.length){return false;}
+  participantName=saved.participantName;
+  participantNameEl.value=participantName;
+  participantUserId=saved.participantUserId||null;
+  quizSessionId=saved.quizSessionId;
+  watchParticipantSession();
+  void checkRemoteSession().catch(function(){});
+  current=saved.current;
+  score=Number(saved.score)||0;
+  results=Array.isArray(saved.results)?saved.results:[];
+  homeEl.classList.add("hidden");
+  gameEl.classList.remove("hidden");
+  startMusic();
+  if(saved.answered){
+    if(current>=Q.length-1){finish();return true;}
+    current++;
+    answered=false;
+    showQuestion();
+  }else showQuestion(saved.deadline);
+  return true;
 }
 
 async function createRemoteQuizSession(){
@@ -136,6 +210,7 @@ async function createRemoteQuizSession(){
   }).select("id").single();
   if(created.error)throw created.error;
   quizSessionId=created.data.id;
+  watchParticipantSession();
 }
 
 function saveRemoteProgress(status){
@@ -167,16 +242,18 @@ function renderAdminRows(rows){
   }
   adminRowsEl.innerHTML=rows.map(function(row){
     const completed=row.status==="completed";
-    const stateClass=completed?"stateDone":"stateLive";
-    const stateText=completed?"Sudah selesai":"Sedang mengerjakan";
-    const progress=completed?"Skor "+row.score+"/"+(row.total_questions*10):"Soal "+row.current_question+"/"+row.total_questions+" • Skor "+row.score;
-    return '<div class="adminRow"><div><h4>'+escapeHTML(row.participant_name)+'</h4><p>'+progress+' • Update '+escapeHTML(formatDate(row.updated_at))+'</p></div><span class="state '+stateClass+'">'+stateText+'</span></div>';
+    const kicked=row.status==="kicked";
+    const stateClass=completed?"stateDone":kicked?"stateKick":"stateLive";
+    const stateText=completed?"Sudah selesai":kicked?"Dikeluarkan":"Sedang mengerjakan";
+    const progress=completed?"Skor "+row.score+"/"+(row.total_questions*10):kicked?"Dikeluarkan dari kuis":"Soal "+row.current_question+"/"+row.total_questions+" • Skor "+row.score;
+    const action=!completed&&!kicked?'<button class="btn kickBtn" type="button" data-kick-id="'+escapeHTML(row.id)+'">Keluarkan</button>':'';
+    return '<div class="adminRow"><div><h4>'+escapeHTML(row.participant_name)+'</h4><p>'+progress+' • Update '+escapeHTML(formatDate(row.updated_at))+'</p></div><span class="state '+stateClass+'">'+stateText+'</span>'+action+'</div>';
   }).join("");
 }
 
 async function loadAdminSessions(){
   if(!supabaseClient)return;
-  const result=await supabaseClient.from("quiz_sessions").select("participant_name,status,current_question,score,total_questions,updated_at").order("updated_at",{ascending:false});
+  const result=await supabaseClient.from("quiz_sessions").select("id,participant_name,status,current_question,score,total_questions,updated_at").order("updated_at",{ascending:false});
   if(result.error)throw result.error;
   renderAdminRows(result.data||[]);
 }
@@ -186,10 +263,25 @@ function watchAdminSessions(){
   adminChannel=supabaseClient.channel("quiz-sessions-admin").on("postgres_changes",{event:"*",schema:"public",table:"quiz_sessions"},function(){void loadAdminSessions().catch(function(error){adminMessageEl.textContent=error.message;});}).subscribe();
 }
 
+async function kickParticipant(id,button){
+  if(!confirm("Keluarkan peserta ini dari kuis?"))return;
+  button.disabled=true;
+  button.textContent="Mengeluarkan...";
+  const result=await supabaseClient.from("quiz_sessions").update({status:"kicked",updated_at:new Date().toISOString()}).eq("id",id).eq("status","in_progress");
+  if(result.error){
+    button.disabled=false;
+    button.textContent="Keluarkan";
+    adminMessageEl.textContent="Gagal mengeluarkan peserta: "+result.error.message;
+    return;
+  }
+  await loadAdminSessions();
+}
+
 function showHome(){
   adminEl.classList.add("hidden");
   gameEl.classList.add("hidden");
   endEl.classList.add("hidden");
+  kickedEl.classList.add("hidden");
   homeEl.classList.remove("hidden");
 }
 
@@ -197,6 +289,7 @@ function showAdmin(){
   homeEl.classList.add("hidden");
   gameEl.classList.add("hidden");
   endEl.classList.add("hidden");
+  kickedEl.classList.add("hidden");
   adminEl.classList.remove("hidden");
   adminMessageEl.textContent=supabaseClient?"":"Supabase belum dikonfigurasi. Isi URL dan publishable key di index.html terlebih dahulu.";
 }
@@ -236,17 +329,21 @@ function updateTimer(){
   timerEl.classList.toggle("danger",seconds<=30);
 }
 
-function startTimer(){
+function startTimer(deadline){
   clearInterval(timerId);
-  seconds=300;
-  updateTimer();
-  timerId=setInterval(function(){
-    seconds--;
+  questionDeadline=deadline||Date.now()+300000;
+  function tick(){
+    seconds=Math.max(0,Math.ceil((questionDeadline-Date.now())/1000));
     updateTimer();
+    saveLocalQuizState();
     if(seconds<=0){
       clearInterval(timerId);
       timeoutQuestion();
     }
+  }
+  tick();
+  timerId=setInterval(function(){
+    tick();
   },1000);
 }
 
@@ -274,11 +371,12 @@ async function start(){
   current=0;
   score=0;
   results=[];
+  answered=false;
   startMusic();
   showQuestion();
 }
 
-function showQuestion(){
+function showQuestion(deadline){
   clearInterval(timerId);
   const item=Q[current];
   answered=false;
@@ -316,7 +414,8 @@ function showQuestion(){
       ansEl.appendChild(b);
     });
   }
-  startTimer();
+  startTimer(deadline);
+  saveLocalQuizState();
   void saveRemoteProgress("in_progress");
 }
 
@@ -326,6 +425,7 @@ function finishAnswer(ok){
   statusEl.textContent="✅ Soal "+(current+1)+" sudah selesai.";
   nextEl.style.display="inline-block";
   void saveRemoteProgress("in_progress");
+  saveLocalQuizState();
 }
 
 function answerChoice(choice){
@@ -382,6 +482,7 @@ function timeoutQuestion(){
   results.push(false);
   statusEl.textContent="⏰ Soal "+(current+1)+" selesai karena waktu habis.";
   void saveRemoteProgress("in_progress");
+  saveLocalQuizState();
   setTimeout(next,500);
 }
 
@@ -396,8 +497,10 @@ function next(){
 function finish(){
   clearInterval(timerId);
   clearInterval(musicTimer);
+  stopParticipantWatch();
   if(audioCtx){try{audioCtx.close();}catch(e){}}
   void saveRemoteProgress("completed");
+  clearLocalQuizState();
   gameEl.classList.add("hidden");
   endEl.classList.remove("hidden");
   const correct=results.filter(Boolean).length;
@@ -440,4 +543,16 @@ startBtn.addEventListener("click",function(){void start();});
 nextEl.addEventListener("click",next);
 adminBtn.addEventListener("click",showAdmin);
 closeAdminBtn.addEventListener("click",showHome);
+adminRowsEl.addEventListener("click",function(event){
+  const button=event.target.closest("[data-kick-id]");
+  if(button)void kickParticipant(button.dataset.kickId,button);
+});
+kickBackBtn.addEventListener("click",function(){
+  participantName="";
+  participantNameEl.value="";
+  nameErrorEl.textContent="";
+  startBtn.disabled=true;
+  showHome();
+});
+restoreLocalQuiz();
 </script></div></body></html>

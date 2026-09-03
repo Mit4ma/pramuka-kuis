@@ -20,6 +20,10 @@ create table if not exists public.quiz_sessions (
   completed_at timestamptz
 );
 
+alter table public.quiz_sessions drop constraint if exists quiz_sessions_status_check;
+alter table public.quiz_sessions add constraint quiz_sessions_status_check
+check (status in ('in_progress', 'completed', 'kicked'));
+
 alter table public.quiz_admins enable row level security;
 alter table public.quiz_sessions enable row level security;
 
@@ -47,13 +51,24 @@ with check (participant_id = auth.uid());
 drop policy if exists "participants can update own quiz session" on public.quiz_sessions;
 create policy "participants can update own quiz session"
 on public.quiz_sessions for update to authenticated
-using (participant_id = auth.uid())
-with check (participant_id = auth.uid());
+using ((select auth.uid()) = participant_id and status <> 'kicked')
+with check ((select auth.uid()) = participant_id and status <> 'kicked');
+
+drop policy if exists "participants can view own quiz session" on public.quiz_sessions;
+create policy "participants can view own quiz session"
+on public.quiz_sessions for select to authenticated
+using (participant_id = auth.uid());
 
 drop policy if exists "admins can view quiz sessions" on public.quiz_sessions;
 create policy "admins can view quiz sessions"
 on public.quiz_sessions for select to authenticated
 using (public.is_quiz_admin());
+
+drop policy if exists "admins can kick quiz participants" on public.quiz_sessions;
+create policy "admins can kick quiz participants"
+on public.quiz_sessions for update to authenticated
+using (public.is_quiz_admin())
+with check (public.is_quiz_admin());
 
 grant select, insert, update on public.quiz_sessions to authenticated;
 
