@@ -1,0 +1,447 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kuis Pramuka 50 Soal</title>
+<style>
+body{margin:0;background:linear-gradient(135deg,#eef2ff,#f8fafc);font-family:Arial,sans-serif;color:#172033}.wrap{max-width:720px;margin:auto;padding:18px}.card{background:white;border-radius:22px;padding:22px;box-shadow:0 10px 35px #0001;margin:12px 0}h1{margin:5px 0}.muted{color:#64748b}.top{display:flex;justify-content:space-between}.badge{background:#eef2ff;color:#4338ca;border-radius:99px;padding:7px 11px;font-weight:bold}.bar{height:8px;background:#4f46e5;width:0}.track{background:#e5e7eb;border-radius:99px;overflow:hidden;margin:16px 0}.q{font-size:20px;font-weight:700;line-height:1.45;margin:22px 0}.opt{width:100%;text-align:left;background:#fff;border:2px solid #e5e7eb;border-radius:14px;padding:14px;margin:7px 0;font-size:16px}.correct{background:#dcfce7!important;border-color:#16a34a!important}.wrong{background:#fee2e2!important;border-color:#dc2626!important}.btn{border:0;background:#4f46e5;color:#fff;border-radius:13px;padding:13px 18px;font-weight:bold;margin-top:10px}.next{display:none}input{width:100%;padding:14px;border:2px solid #ddd;border-radius:13px;font-size:16px;box-sizing:border-box}.score{font-size:48px;font-weight:900;color:#4338ca}.hidden{display:none}.center{text-align:center}.key{background:#f8fafc;padding:9px;border-radius:10px;margin:6px 0}
+.timer{background:#fff7ed;color:#c2410c;border:2px solid #fed7aa;border-radius:12px;padding:7px 11px;font-weight:900}.timer.danger{background:#fee2e2;color:#b91c1c;border-color:#fca5a5}.musicNote{font-size:14px;margin-top:8px}.opt,.btn{cursor:pointer!important;position:relative;z-index:20;pointer-events:auto!important}.opt:disabled,.btn:disabled{cursor:default!important}</style></head><body><div class="wrap">
+<div id="home" class="card center"><div style="font-size:50px">🎯</div><p class="eyebrow">PRAMUKA LEARNING LAB</p><h1>Kuis Pramuka</h1><p class="muted">P3K • Sejarah Indonesia • Organisasi</p><p>50 soal • 40 pilihan ganda • 10 isian singkat<br>Kesulitan sedang cenderung sulit</p><div class="nameBox"><label for="participantName">Nama peserta</label><input id="participantName" type="text" maxlength="80" autocomplete="name" placeholder="Tulis nama lengkapmu" required><p id="nameError" class="errorText" role="alert"></p></div><button id="startBtn" class="btn primaryBtn" type="button" disabled>🎯 MULAI KUIS</button><p class="muted">🎵 Musik otomatis saat kuis dimulai</p></div>
+<div id="game" class="card hidden"><div class="top"><b id="no" class="badge">Soal 1/50</b><span id="timer" class="timer">⏱️ 05:00</span><b id="sc" class="badge">Skor: 0</b></div><div class="track"><div id="bar" class="bar"></div></div><div id="cat" class="muted"></div><div id="q" class="q"></div><div id="ans"></div><div id="fb"></div><p id="status" class="muted"></p><button id="next" class="btn next" type="button"></button></div>
+<div id="end" class="card hidden center"><h1>Kuis Selesai 🏆</h1><div id="final" class="score"></div><p id="pred"></p><div id="keys"></div></div>
+<div id="admin" class="card hidden"><div class="adminHead"><div><p class="eyebrow">PRIVATE MONITORING</p><h2>Dashboard Admin</h2><p class="muted">Pantau peserta yang sedang mengerjakan dan yang sudah selesai.</p></div><button id="closeAdminBtn" class="ghostBtn" type="button">Kembali</button></div><form id="adminLoginForm" class="adminLogin"><label for="adminEmail">Email admin</label><input id="adminEmail" type="email" autocomplete="username" placeholder="admin@email.com" required><label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password" required><button class="btn primaryBtn" type="submit">MASUK KE DASHBOARD</button><p id="adminMessage" class="errorText" role="alert"></p></form><div id="adminDashboard" class="hidden"><div class="statGrid"><div class="statCard"><span>Total sesi</span><strong id="statAll">0</strong></div><div class="statCard activeStat"><span>Sedang mengerjakan</span><strong id="statActive">0</strong></div><div class="statCard doneStat"><span>Sudah selesai</span><strong id="statDone">0</strong></div></div><div class="tableHead"><div><h3>Aktivitas peserta</h3><p id="adminUpdated" class="muted">Belum diperbarui</p></div><button id="adminRefreshBtn" class="ghostBtn" type="button">Muat ulang</button></div><div id="adminRows" class="adminRows"></div><button id="adminLogoutBtn" class="ghostBtn" type="button">Keluar</button></div></div>
+<footer class="muted center" style="padding:8px 0 18px"><button id="adminBtn" class="linkBtn" type="button">Akses Admin</button><span class="footerDot">•</span> By Cid</footer>
+<style>
+.eyebrow{margin:0 0 6px;color:#4f46e5;font-size:12px;font-weight:900;letter-spacing:.14em}.nameBox{text-align:left;margin:20px 0 8px}.nameBox label,.adminLogin label{display:block;font-weight:800;font-size:14px;margin:0 0 7px}.errorText{min-height:18px;color:#b91c1c;font-size:13px;margin:8px 0 0}.primaryBtn{width:100%}.btn:disabled{opacity:.5;cursor:not-allowed!important}.linkBtn,.ghostBtn{border:0;background:transparent;color:#4338ca;font-weight:800;cursor:pointer;padding:10px;border-radius:10px}.linkBtn:hover,.ghostBtn:hover{background:#eef2ff}.footerDot{margin:0 5px;color:#94a3b8}.adminHead,.tableHead{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.adminHead h2{margin:0;font-size:28px}.adminLogin{max-width:420px;margin-top:20px}.adminLogin input{margin-bottom:12px}.statGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}.statCard{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:15px}.statCard span{display:block;color:#64748b;font-size:12px;font-weight:700}.statCard strong{display:block;font-size:28px;margin-top:6px;color:#172033}.activeStat{background:#ecfdf5;border-color:#bbf7d0}.doneStat{background:#eef2ff;border-color:#c7d2fe}.tableHead{align-items:center;margin:22px 0 10px}.tableHead h3{margin:0 0 3px}.tableHead p{margin:0;font-size:12px}.adminRows{display:grid;gap:10px;margin-bottom:16px}.adminRow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;border:1px solid #e5e7eb;border-radius:15px;padding:14px}.adminRow h4{margin:0 0 4px;font-size:16px}.adminRow p{margin:0;color:#64748b;font-size:13px}.state{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 9px;font-size:12px;font-weight:900;white-space:nowrap}.stateLive{background:#dcfce7;color:#166534}.stateDone{background:#e0e7ff;color:#3730a3}.emptyState{text-align:center;border:1px dashed #cbd5e1;color:#64748b;border-radius:15px;padding:24px}.hidden{display:none!important}@media(max-width:560px){.top{gap:8px;align-items:flex-start}.badge{font-size:12px;padding:6px 8px}.statGrid{grid-template-columns:1fr}.adminHead,.tableHead{display:block}.ghostBtn{margin-top:10px}.adminRow{grid-template-columns:1fr}.state{justify-self:start}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const Q=[
+["P3K","Saat menemukan korban dengan perdarahan hebat pada lengan, tindakan paling tepat adalah...",["Memberikan minum","Menekan langsung sumber perdarahan dengan balutan","Memijat area luka","Membiarkan korban berdiri"],1],
+["P3K","Pada luka bakar ringan, pertolongan pertama yang tepat adalah...",["Mengoleskan pasta gigi","Memecahkan lepuhan","Mendinginkan dengan air mengalir","Menempelkan kapas"],2],
+["P3K","Korban tidak sadar tetapi bernapas normal. Posisi yang umumnya digunakan untuk menjaga jalan napas adalah...",["Posisi pemulihan/miring","Tengkurap penuh","Duduk tegak","Berdiri"],0],
+["P3K","Tindakan yang harus dihindari pada luka bakar adalah...",["Mendinginkan dengan air mengalir","Melepas benda yang tidak melekat","Mengoleskan bahan rumah tangga sembarangan","Menjaga korban tenang"],2],
+["P3K","Dalam prinsip RICE, huruf I berarti...",["Immobilization","Ice","Injection","Inspection"],1],
+["P3K","Korban tersedak tetapi masih bisa batuk kuat dan berbicara. Tindakan awal yang tepat adalah...",["Memberi minum","Mendorong makanan dengan tangan","Menganjurkan korban terus batuk","Melakukan kompresi dada"],2],
+["P3K","Tujuan utama pemeriksaan awal korban dalam P3K adalah...",["Menentukan diagnosis dokter","Menemukan ancaman terhadap nyawa terlebih dahulu","Memberi obat sebanyak mungkin","Membuat korban berjalan"],1],
+["P3K","Sebelum menolong korban kecelakaan di jalan, penolong perlu...",["Langsung menarik korban","Memastikan lokasi aman","Memberi makanan","Mengambil foto"],1],
+["P3K","Jika ada benda menancap pada luka, tindakan tepat adalah...",["Mencabutnya","Memutarnya","Tidak mencabut dan menstabilkannya","Menekan tepat di atas benda"],2],
+["P3K","Tanda yang mengkhawatirkan pada korban perdarahan adalah...",["Kulit hangat","Pucat, dingin, lemah, kesadaran menurun","Nafsu makan meningkat","Bersin"],1],
+["P3K","Pada mimisan, posisi yang dianjurkan adalah...",["Menengadahkan kepala","Duduk condong sedikit ke depan","Telentang","Menunduk sampai lutut"],1],
+["P3K","Tujuan penggunaan sarung tangan sekali pakai saat P3K adalah...",["Agar profesional","Mengurangi kontak dengan darah/cairan tubuh","Menghentikan semua perdarahan","Menggantikan cuci tangan"],1],
+["P3K","Jika diduga cedera tulang belakang, prinsip yang tepat adalah...",["Meminta korban berdiri","Meminimalkan gerakan dan meminta bantuan medis","Memijat punggung","Menarik kepala"],1],
+["P3K","Korban pingsan lalu sadar kembali. Tindakan sebaiknya...",["Menyuruh berlari","Membiarkan sendiri","Memastikan kondisi dan mencari bantuan bila ada tanda bahaya","Memberi obat"],2],
+["Sejarah Indonesia","BPUPKI dibentuk Jepang terutama dalam konteks...",["Menyerahkan Indonesia kepada Belanda","Menarik simpati rakyat ketika Jepang terdesak","Membubarkan semua organisasi","Mendirikan negara federal"],1],
+["Sejarah Indonesia","Tokoh yang menyampaikan pidato dasar negara pada 1 Juni 1945 adalah...",["Mohammad Hatta","Soepomo","Soekarno","A.A. Maramis"],2],
+["Sejarah Indonesia","Panitia Sembilan menghasilkan rumusan yang dikenal sebagai...",["Dekrit Presiden","Piagam Jakarta","Trikora","Maklumat Pemerintah"],1],
+["Sejarah Indonesia","Perubahan rumusan sila pertama pada 18 Agustus 1945 menunjukkan pentingnya...",["Dominasi satu golongan","Persatuan dan kesepakatan nasional","Campur tangan Belanda","Penghapusan Pancasila"],1],
+["Sejarah Indonesia","Proklamasi Kemerdekaan Indonesia dibacakan pada...",["16 Agustus 1945","17 Agustus 1945","18 Agustus 1945","20 Mei 1945"],1],
+["Sejarah Indonesia","Peristiwa Rengasdengklok berkaitan erat dengan...",["Sumpah Pemuda","Desakan agar proklamasi segera dilakukan","Pembentukan BPUPKI","KMB"],1],
+["Sejarah Indonesia","Sidang PPKI 18 Agustus 1945 menghasilkan keputusan berikut, kecuali...",["Mengesahkan UUD 1945","Memilih Soekarno-Hatta","Membentuk KNIP","Menetapkan delapan provinsi"],3],
+["Sejarah Indonesia","Sumpah Pemuda diperingati setiap...",["20 Mei","17 Agustus","28 Oktober","10 November"],2],
+["Sejarah Indonesia","Makna utama Sumpah Pemuda adalah...",["Mengutamakan identitas daerah","Memperkuat persatuan pemuda","Mendirikan pemerintahan militer","Menghapus bahasa daerah"],1],
+["Sejarah Indonesia","KMB tahun 1949 berkaitan dengan...",["Pengakuan kedaulatan Indonesia oleh Belanda","Pembentukan BPUPKI","Rengasdengklok","Sumpah Pemuda"],0],
+["Sejarah Indonesia","Serangan Umum 1 Maret 1949 penting karena...",["Menunjukkan eksistensi dan kekuatan Republik Indonesia","Menandai proklamasi","Membentuk PPKI","Mengakhiri pendudukan Jepang"],0],
+["Sejarah Indonesia","Hari Kebangkitan Nasional mengenang berdirinya...",["Budi Utomo","Sarekat Islam","Indische Partij","Perhimpunan Indonesia"],0],
+["Sejarah Indonesia","Bandung Lautan Api terjadi dalam konteks...",["Perlawanan terhadap upaya penguasaan kembali oleh Sekutu dan NICA","Pendudukan Jepang pertama","Pembentukan BPUPKI","Perumusan Pancasila"],0],
+["Organisasi","AD/ART berfungsi terutama sebagai...",["Pedoman dasar organisasi","Daftar absensi","Catatan keuangan pribadi","Jadwal piknik"],0],
+["Organisasi","Musyawarah bertujuan untuk...",["Memenangkan pendapat ketua","Mencapai keputusan melalui pertimbangan bersama","Menghindari semua perbedaan","Memutuskan tanpa diskusi"],1],
+["Organisasi","Saat terjadi perbedaan pendapat dalam rapat, sikap tepat adalah...",["Memotong pembicaraan","Mendengarkan alasan dan mencari titik temu","Meninggalkan rapat","Memaksakan suara"],1],
+["Organisasi","Delegasi tugas efektif berarti...",["Ketua menyerahkan semua tanggung jawab","Memberi tugas dan wewenang jelas kepada pihak tepat","Tanpa batas waktu","Tanpa koordinasi"],1],
+["Organisasi","Ciri kepemimpinan baik adalah...",["Tidak menerima kritik","Mengambil keputusan dan bertanggung jawab","Selalu bekerja sendiri","Mengutamakan pribadi"],1],
+["Organisasi","Notulen rapat digunakan untuk...",["Mencatat pembahasan dan keputusan","Menggantikan AD/ART","Menentukan hukuman","Menghapus hasil rapat"],0],
+["Organisasi","Koordinasi diperlukan agar...",["Setiap bagian berjalan sendiri","Kegiatan antarbagian berjalan selaras","Semua dikerjakan ketua","Anggota tak perlu melapor"],1],
+["Organisasi","Anggota tidak memahami batas wewenang tugas. Langkah terbaik...",["Mengambil keputusan apa pun","Meminta klarifikasi pemberi tugas","Mengabaikan tugas","Memindahkan tanpa izin"],1],
+["Organisasi","Akuntabilitas berarti...",["Kebebasan tanpa tanggung jawab","Kewajiban mempertanggungjawabkan tindakan dan hasil","Menghindari laporan","Menyalahkan anggota"],1],
+["Organisasi","Evaluasi kegiatan dilakukan untuk...",["Mencari yang disalahkan","Menilai hasil dan menemukan perbaikan","Menghapus program","Menghindari pertanggungjawaban"],1],
+["Organisasi","Program tidak sesuai rencana. Tindakan konstruktif adalah...",["Menyalahkan panitia","Menganalisis penyebab dan memperbaiki strategi","Menghentikan semua kegiatan","Menyembunyikan hasil"],1],
+["Organisasi","Prinsip penting pembagian kerja adalah...",["Semua mengerjakan hal sama","Tugas sesuai kemampuan dengan tanggung jawab jelas","Tugas acak","Ketua mengerjakan semua"],1],
+["Organisasi","Komunikasi efektif sebaiknya...",["Jelas, tepat, melalui saluran sesuai","Selalu pesan berantai","Mengandalkan asumsi","Menghindari konfirmasi"],0],
+["Organisasi","Konflik internal yang dibiarkan berisiko...",["Meningkatkan koordinasi","Menurunkan kepercayaan dan efektivitas","Membuat semua setuju","Menghilangkan kepemimpinan"],1],
+["Organisasi","Keputusan organisasi bertanggung jawab sebaiknya...",["Berdasarkan informasi relevan dan dampaknya","Mengikuti rumor","Mengutamakan pribadi","Tercepat tanpa pertimbangan"],0],
+["Isian Singkat","Sebutkan kepanjangan P3K.",["pertolongan pertama pada kecelakaan"]],
+["Isian Singkat","Siapa yang membacakan Proklamasi 17 Agustus 1945?",["soekarno","ir soekarno"]],
+["Isian Singkat","Tanggal berapa Sumpah Pemuda diperingati?",["28 oktober","28 oktober 1928"]],
+["Isian Singkat","Apa nama badan yang menggantikan BPUPKI?",["ppki"]],
+["Isian Singkat","Sebutkan satu APD yang dapat digunakan saat P3K.",["sarung tangan","handscoon"]],
+["Isian Singkat","Dokumen pedoman dasar organisasi yang terdiri dari Anggaran Dasar dan Anggaran Rumah Tangga disebut?",["ad/art","ad art","anggaran dasar anggaran rumah tangga"]],
+["Isian Singkat","Apa istilah untuk catatan resmi jalannya rapat?",["notulen","notula"]],
+["Isian Singkat","Apa nama peristiwa ketika Soekarno-Hatta dibawa ke luar Jakarta pada 16 Agustus 1945?",["rengasdengklok","peristiwa rengasdengklok"]],
+["Isian Singkat","Siapa tokoh yang menjadi Wakil Presiden pertama Indonesia?",["mohammad hatta","moh hatta","hatta"]],
+["Isian Singkat","Prinsip kerja organisasi yang berarti setiap pelaksana harus mempertanggungjawabkan tugasnya disebut?",["akuntabilitas","tanggung jawab"]]
+];
+
+const SUPABASE_URL="https://hyelxpwihbzrhlemexrw.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_hbIEbcLnTmCndvoLmcGJ7w_RBrXyJF-";
+const supabaseClient=window.supabase && SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("PASTE_") && SUPABASE_PUBLISHABLE_KEY.length>20
+  ? window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY)
+  : null;
+
+const homeEl=document.getElementById("home");
+const gameEl=document.getElementById("game");
+const endEl=document.getElementById("end");
+const startBtn=document.getElementById("startBtn");
+const participantNameEl=document.getElementById("participantName");
+const nameErrorEl=document.getElementById("nameError");
+const noEl=document.getElementById("no");
+const scEl=document.getElementById("sc");
+const barEl=document.getElementById("bar");
+const catEl=document.getElementById("cat");
+const qEl=document.getElementById("q");
+const ansEl=document.getElementById("ans");
+const fbEl=document.getElementById("fb");
+const statusEl=document.getElementById("status");
+const nextEl=document.getElementById("next");
+const timerEl=document.getElementById("timer");
+const finalEl=document.getElementById("final");
+const predEl=document.getElementById("pred");
+const keysEl=document.getElementById("keys");
+const adminEl=document.getElementById("admin");
+const adminBtn=document.getElementById("adminBtn");
+const closeAdminBtn=document.getElementById("closeAdminBtn");
+const adminLoginForm=document.getElementById("adminLoginForm");
+const adminEmailEl=document.getElementById("adminEmail");
+const adminPasswordEl=document.getElementById("adminPassword");
+const adminMessageEl=document.getElementById("adminMessage");
+const adminDashboardEl=document.getElementById("adminDashboard");
+const adminRowsEl=document.getElementById("adminRows");
+const adminUpdatedEl=document.getElementById("adminUpdated");
+const statAllEl=document.getElementById("statAll");
+const statActiveEl=document.getElementById("statActive");
+const statDoneEl=document.getElementById("statDone");
+const adminRefreshBtn=document.getElementById("adminRefreshBtn");
+const adminLogoutBtn=document.getElementById("adminLogoutBtn");
+
+let current=0, score=0, results=[], answered=false, seconds=300, timerId=null;
+let audioCtx=null, musicTimer=null, musicStep=0;
+let participantName="", participantUserId=null, quizSessionId=null, progressWrite=Promise.resolve(), adminChannel=null;
+
+function escapeHTML(value){
+  return String(value??"").replace(/[&<>"']/g,function(char){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char];});
+}
+
+function formatDate(value){
+  return value?new Date(value).toLocaleString("id-ID",{dateStyle:"medium",timeStyle:"short"}):"-";
+}
+
+async function createRemoteQuizSession(){
+  if(!supabaseClient)return;
+  let session=(await supabaseClient.auth.getSession()).data.session;
+  if(session && !session.user.is_anonymous){
+    await supabaseClient.auth.signOut({scope:"local"});
+    session=null;
+  }
+  if(!session){
+    const auth=await supabaseClient.auth.signInAnonymously();
+    if(auth.error)throw auth.error;
+    session=auth.data.session;
+  }
+  participantUserId=session.user.id;
+  const created=await supabaseClient.from("quiz_sessions").insert({
+    participant_id:participantUserId,
+    participant_name:participantName,
+    total_questions:50
+  }).select("id").single();
+  if(created.error)throw created.error;
+  quizSessionId=created.data.id;
+}
+
+function saveRemoteProgress(status){
+  if(!supabaseClient || !quizSessionId)return Promise.resolve();
+  const payload={
+    status:status,
+    current_question:Math.min(current+1,50),
+    score:score,
+    updated_at:new Date().toISOString()
+  };
+  if(status==="completed")payload.completed_at=new Date().toISOString();
+  progressWrite=progressWrite.then(async function(){
+    const result=await supabaseClient.from("quiz_sessions").update(payload).eq("id",quizSessionId).eq("participant_id",participantUserId);
+    if(result.error)console.warn("Progress kuis gagal disimpan",result.error);
+  });
+  return progressWrite;
+}
+
+function renderAdminRows(rows){
+  const active=rows.filter(function(row){return row.status==="in_progress";}).length;
+  const done=rows.filter(function(row){return row.status==="completed";}).length;
+  statAllEl.textContent=rows.length;
+  statActiveEl.textContent=active;
+  statDoneEl.textContent=done;
+  adminUpdatedEl.textContent="Diperbarui "+formatDate(new Date().toISOString());
+  if(!rows.length){
+    adminRowsEl.innerHTML='<div class="emptyState">Belum ada peserta yang memulai kuis.</div>';
+    return;
+  }
+  adminRowsEl.innerHTML=rows.map(function(row){
+    const completed=row.status==="completed";
+    const stateClass=completed?"stateDone":"stateLive";
+    const stateText=completed?"Sudah selesai":"Sedang mengerjakan";
+    const progress=completed?"Skor "+row.score+"/"+(row.total_questions*10):"Soal "+row.current_question+"/"+row.total_questions+" • Skor "+row.score;
+    return '<div class="adminRow"><div><h4>'+escapeHTML(row.participant_name)+'</h4><p>'+progress+' • Update '+escapeHTML(formatDate(row.updated_at))+'</p></div><span class="state '+stateClass+'">'+stateText+'</span></div>';
+  }).join("");
+}
+
+async function loadAdminSessions(){
+  if(!supabaseClient)return;
+  const result=await supabaseClient.from("quiz_sessions").select("participant_name,status,current_question,score,total_questions,updated_at").order("updated_at",{ascending:false});
+  if(result.error)throw result.error;
+  renderAdminRows(result.data||[]);
+}
+
+function watchAdminSessions(){
+  if(!supabaseClient || adminChannel)return;
+  adminChannel=supabaseClient.channel("quiz-sessions-admin").on("postgres_changes",{event:"*",schema:"public",table:"quiz_sessions"},function(){void loadAdminSessions().catch(function(error){adminMessageEl.textContent=error.message;});}).subscribe();
+}
+
+function showHome(){
+  adminEl.classList.add("hidden");
+  gameEl.classList.add("hidden");
+  endEl.classList.add("hidden");
+  homeEl.classList.remove("hidden");
+}
+
+function showAdmin(){
+  homeEl.classList.add("hidden");
+  gameEl.classList.add("hidden");
+  endEl.classList.add("hidden");
+  adminEl.classList.remove("hidden");
+  adminMessageEl.textContent=supabaseClient?"":"Supabase belum dikonfigurasi. Isi URL dan publishable key di index.html terlebih dahulu.";
+}
+
+function startMusic(){
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    audioCtx=new AC();
+    if(audioCtx.state==="suspended") audioCtx.resume();
+    const gain=audioCtx.createGain();
+    gain.gain.value=0.025;
+    gain.connect(audioCtx.destination);
+    const notes=[261.63,329.63,392,329.63,293.66,349.23,440,349.23,261.63,329.63,392,523.25];
+    function play(){
+      if(!audioCtx)return;
+      const osc=audioCtx.createOscillator();
+      const g=audioCtx.createGain();
+      osc.type="sine";
+      osc.frequency.value=notes[musicStep%notes.length];
+      g.gain.setValueAtTime(0.0001,audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.08,audioCtx.currentTime+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,audioCtx.currentTime+0.22);
+      osc.connect(g); g.connect(gain);
+      osc.start(); osc.stop(audioCtx.currentTime+0.25);
+      musicStep++;
+    }
+    play();
+    musicTimer=setInterval(play,300);
+  }catch(e){}
+}
+
+function updateTimer(){
+  const min=Math.floor(seconds/60);
+  const sec=seconds%60;
+  timerEl.textContent="⏱️ "+String(min).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+  timerEl.classList.toggle("danger",seconds<=30);
+}
+
+function startTimer(){
+  clearInterval(timerId);
+  seconds=300;
+  updateTimer();
+  timerId=setInterval(function(){
+    seconds--;
+    updateTimer();
+    if(seconds<=0){
+      clearInterval(timerId);
+      timeoutQuestion();
+    }
+  },1000);
+}
+
+async function start(){
+  participantName=participantNameEl.value.trim();
+  if(!participantName){
+    nameErrorEl.textContent="Nama wajib diisi sebelum mulai.";
+    participantNameEl.focus();
+    return;
+  }
+  nameErrorEl.textContent="";
+  startBtn.disabled=true;
+  startBtn.textContent="MENYIAPKAN KUIS...";
+  try{
+    await createRemoteQuizSession();
+  }catch(error){
+    nameErrorEl.textContent="Kuis belum bisa tersambung ke server. Coba lagi.";
+    console.error(error);
+    startBtn.disabled=false;
+    startBtn.textContent="🎯 MULAI KUIS";
+    return;
+  }
+  homeEl.classList.add("hidden");
+  gameEl.classList.remove("hidden");
+  current=0;
+  score=0;
+  results=[];
+  startMusic();
+  showQuestion();
+}
+
+function showQuestion(){
+  clearInterval(timerId);
+  const item=Q[current];
+  answered=false;
+  noEl.textContent="Soal "+(current+1)+"/50";
+  scEl.textContent="Skor: "+score;
+  barEl.style.width=((current+1)/50*100)+"%";
+  catEl.textContent=item[0];
+  qEl.textContent=item[1];
+  fbEl.textContent="";
+  statusEl.textContent="📝 Soal "+(current+1)+" — silakan jawab sampai selesai.";
+  nextEl.style.display="none";
+  nextEl.textContent=current===49?"LIHAT HASIL 🏆":"SOAL BERIKUTNYA ➜";
+  ansEl.innerHTML="";
+
+  if(item[0]==="Isian Singkat"){
+    const input=document.createElement("input");
+    input.id="answerInput";
+    input.type="text";
+    input.placeholder="Ketik jawabanmu...";
+    const send=document.createElement("button");
+    send.type="button";
+    send.className="btn";
+    send.textContent="KIRIM JAWABAN";
+    send.onclick=submitShort;
+    input.onkeydown=function(e){if(e.key==="Enter")submitShort();};
+    ansEl.appendChild(input);
+    ansEl.appendChild(send);
+  }else{
+    item[2].forEach(function(text,index){
+      const b=document.createElement("button");
+      b.type="button";
+      b.className="opt";
+      b.textContent=String.fromCharCode(65+index)+". "+text;
+      b.onclick=function(){answerChoice(index);};
+      ansEl.appendChild(b);
+    });
+  }
+  startTimer();
+  void saveRemoteProgress("in_progress");
+}
+
+function finishAnswer(ok){
+  results.push(ok);
+  scEl.textContent="Skor: "+score;
+  statusEl.textContent="✅ Soal "+(current+1)+" sudah selesai.";
+  nextEl.style.display="inline-block";
+  void saveRemoteProgress("in_progress");
+}
+
+function answerChoice(choice){
+  if(answered)return;
+  answered=true;
+  clearInterval(timerId);
+  const item=Q[current];
+  ansEl.querySelectorAll(".opt").forEach(function(b,k){
+    if(k===item[3])b.classList.add("correct");
+    if(k===choice && k!==item[3])b.classList.add("wrong");
+    b.disabled=true;
+  });
+  const ok=choice===item[3];
+  if(ok){score+=10;fbEl.textContent="✅ BENAR! +10 poin";}
+  else fbEl.textContent="❌ SALAH! Kunci: "+String.fromCharCode(65+item[3])+". "+item[2][item[3]];
+  finishAnswer(ok);
+}
+
+function normalize(value){
+  return String(value||"").toLowerCase().trim().replace(/[.,!?;:]/g," ").replace(/\s+/g," ");
+}
+
+function submitShort(){
+  if(answered)return;
+  answered=true;
+  clearInterval(timerId);
+  const input=document.getElementById("answerInput");
+  const value=normalize(input?input.value:"");
+  const item=Q[current];
+  const ok=value!=="" && item[2].some(function(answer){
+    const key=normalize(answer);
+    return value===key || value.includes(key) || key.includes(value);
+  });
+  if(ok){score+=10;fbEl.textContent="✅ BENAR! +10 poin";}
+  else fbEl.textContent="❌ BELUM TEPAT! Kunci: "+item[2][0];
+  if(input)input.disabled=true;
+  const send=ansEl.querySelector(".btn");
+  if(send)send.disabled=true;
+  finishAnswer(ok);
+}
+
+function timeoutQuestion(){
+  if(answered)return;
+  answered=true;
+  const item=Q[current];
+  fbEl.textContent="⏰ WAKTU HABIS! Jawaban dianggap salah. Kunci: "+
+    (item[0]==="Isian Singkat"?item[2][0]:String.fromCharCode(65+item[3])+". "+item[2][item[3]]);
+  ansEl.querySelectorAll("button").forEach(function(b,k){
+    if(item[0]!=="Isian Singkat" && k===item[3])b.classList.add("correct");
+    b.disabled=true;
+  });
+  const input=document.getElementById("answerInput");
+  if(input)input.disabled=true;
+  results.push(false);
+  statusEl.textContent="⏰ Soal "+(current+1)+" selesai karena waktu habis.";
+  void saveRemoteProgress("in_progress");
+  setTimeout(next,500);
+}
+
+function next(){
+  clearInterval(timerId);
+  if(current<49){
+    current++;
+    showQuestion();
+  }else finish();
+}
+
+function finish(){
+  clearInterval(timerId);
+  clearInterval(musicTimer);
+  if(audioCtx){try{audioCtx.close();}catch(e){}}
+  void saveRemoteProgress("completed");
+  gameEl.classList.add("hidden");
+  endEl.classList.remove("hidden");
+  const correct=results.filter(Boolean).length;
+  const wrong=50-correct;
+  finalEl.textContent=score+"/500";
+  predEl.innerHTML="<b>Benar "+correct+"/50</b> • <b>Salah "+wrong+"/50</b><br>"+
+    (correct>=45?"Sangat Baik 🥇":correct>=35?"Baik 🥈":correct>=25?"Cukup 🥉":"Perlu belajar lagi 📚");
+  keysEl.innerHTML="<h3>🔑 Kunci Jawaban</h3>"+Q.map(function(item,j){
+    return '<div class="key"><b>'+(j+1)+'.</b> '+
+      (item[0]==="Isian Singkat"?item[2][0]:String.fromCharCode(65+item[3])+". "+item[2][item[3]])+
+      '</div>';
+  }).join("");
+}
+
+participantNameEl.addEventListener("input",function(){
+  nameErrorEl.textContent="";
+  startBtn.disabled=!participantNameEl.value.trim();
+});
+adminLoginForm.addEventListener("submit",async function(event){
+  event.preventDefault();
+  if(!supabaseClient){adminMessageEl.textContent="Supabase belum dikonfigurasi.";return;}
+  adminMessageEl.textContent="Memeriksa akun...";
+  const result=await supabaseClient.auth.signInWithPassword({email:adminEmailEl.value.trim(),password:adminPasswordEl.value});
+  if(result.error){adminMessageEl.textContent="Login gagal. Pastikan email dan password benar.";return;}
+  adminMessageEl.textContent="";
+  adminLoginForm.classList.add("hidden");
+  adminDashboardEl.classList.remove("hidden");
+  try{await loadAdminSessions();watchAdminSessions();}catch(error){adminMessageEl.textContent=error.message;}
+});
+adminRefreshBtn.addEventListener("click",function(){void loadAdminSessions().catch(function(error){adminMessageEl.textContent=error.message;});});
+adminLogoutBtn.addEventListener("click",async function(){
+  if(supabaseClient)await supabaseClient.auth.signOut({scope:"local"});
+  if(adminChannel){await supabaseClient.removeChannel(adminChannel);adminChannel=null;}
+  adminDashboardEl.classList.add("hidden");
+  adminLoginForm.classList.remove("hidden");
+  adminLoginForm.reset();
+  showAdmin();
+});
+startBtn.addEventListener("click",function(){void start();});
+nextEl.addEventListener("click",next);
+adminBtn.addEventListener("click",showAdmin);
+closeAdminBtn.addEventListener("click",showHome);
+</script></div></body></html>
