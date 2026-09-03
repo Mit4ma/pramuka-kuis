@@ -122,17 +122,13 @@ function formatDate(value){
 
 async function createRemoteQuizSession(){
   if(!supabaseClient)return;
-  let session=(await supabaseClient.auth.getSession()).data.session;
-  if(session && !session.user.is_anonymous){
-    await supabaseClient.auth.signOut({scope:"local"});
-    session=null;
-  }
-  if(!session){
-    const auth=await supabaseClient.auth.signInAnonymously();
-    if(auth.error)throw auth.error;
-    session=auth.data.session;
-  }
-  participantUserId=session.user.id;
+  await supabaseClient.auth.signOut({scope:"local"});
+  const auth=await supabaseClient.auth.signInAnonymously();
+  if(auth.error)throw auth.error;
+  const verified=await supabaseClient.auth.getUser();
+  if(verified.error)throw verified.error;
+  if(!verified.data.user)throw new Error("Sesi anonim Supabase tidak tersedia.");
+  participantUserId=verified.data.user.id;
   const created=await supabaseClient.from("quiz_sessions").insert({
     participant_id:participantUserId,
     participant_name:participantName,
