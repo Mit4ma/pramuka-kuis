@@ -59,7 +59,7 @@ particles.appendChild(particleFragment);
 
 const tracks=[
   {title:"I Lay My Love On You",src:"music/i lay my love on you.mp3"},
-  {title:"Marvin Gaye — Charlie Puth feat. Meghan Trainor",src:"music/marvin-gaye.mp3"}
+  {title:"Backstreet Boys — Shape of My Heart",src:"music/Backstreet Boys - Shape of My Heart.mp3"}
 ];
 const musicAudio=document.getElementById("musicAudio");
 const musicToggle=document.getElementById("musicToggle");
